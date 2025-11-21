@@ -6,8 +6,6 @@ import { Vision } from "./components/Vision";
 import { Conclusion } from "./components/Conclusion";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { ImageCarousel } from "./components/ImageCarousel";
-import { ScrollToTop } from "./components/ScrollToTop";
 
 export default function App() {
   return (
@@ -15,13 +13,11 @@ export default function App() {
       <Header />
       <Hero />
       <WhatIsBatohi />
-      <ImageCarousel />
       <KeyFeatures />
       <WhyBatohi />
       <Vision />
       <Conclusion />
       <Footer />
-      <ScrollToTop />
     </div>
   );
 }
