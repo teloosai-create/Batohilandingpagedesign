@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Menu, X, MapPin, Phone, Mail } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,17 +11,12 @@ export function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -47,10 +42,12 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-gray-900/98 backdrop-blur-lg shadow-2xl border-b border-orange-500/20"
-          : "bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-[2px]"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+          isScrolled
+            ? "bg-gray-900/90 shadow-2xl border-b border-orange-500/20"
+            : "bg-gradient-to-b from-black/80 to-transparent"
+        }`}
+        style={{ willChange: 'background-color, box-shadow' }}
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
@@ -77,13 +74,13 @@ export function Header() {
                   key={index}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, ease: "easeOut" }}
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className="px-4 py-2 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+                  className="px-4 py-2 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
                 >
                   {item.label}
                 </motion.a>
@@ -103,7 +100,7 @@ export function Header() {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all"
+              className="lg:hidden w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait">
@@ -113,7 +110,7 @@ export function Header() {
                     initial={{ rotate: -90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                   >
                     <X className="w-6 h-6" />
                   </motion.div>
@@ -123,7 +120,7 @@ export function Header() {
                     initial={{ rotate: 90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                   >
                     <Menu className="w-6 h-6" />
                   </motion.div>
@@ -143,9 +140,10 @@ export function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-gray-900/95 backdrop-blur-lg z-40 lg:hidden"
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="fixed inset-0 bg-gray-900/80 z-40 lg:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
+              style={{ willChange: 'opacity' }}
             />
 
             {/* Menu Content */}
@@ -153,8 +151,9 @@ export function Header() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
+              transition={{ type: 'tween', duration: 0.3, ease: "easeOut" }}
               className="fixed right-0 top-0 bottom-0 w-80 bg-gradient-to-br from-gray-900 via-orange-950 to-gray-900 z-50 lg:hidden shadow-2xl border-l border-orange-500/20"
+              style={{ willChange: 'transform' }}
             >
               <div className="flex flex-col h-full">
                 {/* Menu Header */}
@@ -171,7 +170,7 @@ export function Header() {
                     </div>
                     <button
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all"
+                      className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -186,15 +185,15 @@ export function Header() {
                         key={index}
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
+                        transition={{ delay: index * 0.1, ease: "easeOut" }}
                         href={item.href}
                         onClick={(e) => {
                           e.preventDefault();
                           handleNavClick(item.href);
                         }}
-                        className="flex items-center gap-3 px-4 py-3 text-base text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-all group"
+                        className="flex items-center gap-3 px-4 py-3 text-base text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-colors group"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-orange-500/20 group-hover:bg-orange-500/30 flex items-center justify-center transition-all">
+                        <div className="w-8 h-8 rounded-lg bg-orange-500/20 group-hover:bg-orange-500/30 flex items-center justify-center transition-colors">
                           <MapPin className="w-4 h-4 text-orange-400" />
                         </div>
                         <span>{item.label}</span>
@@ -209,9 +208,9 @@ export function Header() {
                       <motion.a
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 }}
+                        transition={{ delay: 0.5, ease: "easeOut" }}
                         href="tel:+911234567890"
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
                       >
                         <Phone className="w-4 h-4 text-orange-400" />
                         <span>+91 123 456 7890</span>
@@ -219,9 +218,9 @@ export function Header() {
                       <motion.a
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.6 }}
+                        transition={{ delay: 0.6, ease: "easeOut" }}
                         href="mailto:vittologyconsultants@gmail.com"
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-orange-100 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
                       >
                         <Mail className="w-4 h-4 text-orange-400" />
                         <span className="text-xs">vittologyconsultants@gmail.com</span>

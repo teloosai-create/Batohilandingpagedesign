@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { Heart, Compass, ShieldCheck, Award, TrendingUp, Sparkles } from "lucide-react";
+import { useIsMobile } from './ui/use-mobile';
 
 const benefits = [
   {
@@ -36,10 +37,15 @@ const benefits = [
 ];
 
 function BenefitCard({ benefit, index }: { benefit: any; index: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useIsMobile();
+
   return (
     <motion.div
       initial="rest"
-      whileHover="hover"
+      onHoverStart={() => !isMobile && setIsExpanded(true)}
+      onHoverEnd={() => !isMobile && setIsExpanded(false)}
+      onTap={() => isMobile && setIsExpanded(!isExpanded)}
       whileInView="visible"
       viewport={{ once: true, amount: 0.6 }}
       variants={{
@@ -59,9 +65,11 @@ function BenefitCard({ benefit, index }: { benefit: any; index: number }) {
       </div>
       <h3 className="text-lg text-white mb-2">{benefit.title}</h3>
       <motion.div 
+        initial="collapsed"
+        animate={isExpanded ? "expanded" : "collapsed"}
         variants={{ 
-          rest: { opacity: 0, height: 0, y: 10 }, 
-          hover: { opacity: 1, height: 'auto', y: 0 }
+          collapsed: { opacity: 0, height: 0, y: 10 }, 
+          expanded: { opacity: 1, height: 'auto', y: 0 }
         }}
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
