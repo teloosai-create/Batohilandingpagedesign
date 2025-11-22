@@ -1,6 +1,8 @@
+import React from 'react';
 import { Button } from "./ui/button";
+
 import { MapPin, Smartphone, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useState, useEffect, useCallback } from "react";
 
@@ -87,7 +89,7 @@ export function Hero() {
           <ImageWithFallback
             src={heroSlides[currentSlide].background}
             alt="Bihar Tourism"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover blur-lg"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-orange-900/90 to-amber-900/95" />
         </motion.div>

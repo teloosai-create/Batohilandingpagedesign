@@ -44,8 +44,8 @@ export function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
           isScrolled
-            ? "bg-gray-900/90 shadow-2xl border-b border-orange-500/20"
-            : "bg-gradient-to-b from-black/80 to-transparent"
+            ? "bg-gray-900 shadow-2xl border-b border-orange-500/20"
+            : "bg-black"
         }`}
         style={{ willChange: 'background-color, box-shadow' }}
       >
