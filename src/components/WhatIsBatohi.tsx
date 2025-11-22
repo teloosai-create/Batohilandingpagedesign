@@ -55,7 +55,7 @@ export function WhatIsBatohi() {
   );
 
   return (
-    <section id="features" className="py-20 bg-gradient-to-br from-gray-900 via-orange-950 to-red-950 relative overflow-hidden">
+    <section id="about" className="py-20 bg-gradient-to-br from-gray-900 via-orange-950 to-red-950 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-orange-400 blur-3xl" />

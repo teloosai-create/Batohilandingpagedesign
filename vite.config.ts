@@ -1,13 +1,25 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import { brotliCompress } from 'zlib';
+import { promisify } from 'util';
+import { visualizer } from 'rollup-plugin-visualizer';
 
-  import { defineConfig } from 'vite';
-  import react from '@vitejs/plugin-react-swc';
-  import path from 'path';
+const brotli = promisify(brotliCompress);
 
-  export default defineConfig({
-    plugins: [react()],
-    resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-      alias: {
+export default defineConfig({
+  plugins: [
+    react(),
+    visualizer({ open: true }),
+    {
+      ...viteCompression(),
+      enforce: 'post',
+      apply: 'build',
+    },
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: {
         'vaul@1.1.2': 'vaul',
         'sonner@2.0.3': 'sonner',
         'recharts@2.15.2': 'recharts',
@@ -47,14 +59,39 @@
         '@radix-ui/react-alert-dialog@1.1.6': '@radix-ui/react-alert-dialog',
         '@radix-ui/react-accordion@1.2.3': '@radix-ui/react-accordion',
         '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    target: 'esnext',
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom'],
+        },
       },
     },
-    build: {
-      target: 'esnext',
-      outDir: 'dist',
+  },
+  server: {
+    port: 3000,
+    open: true,
+  },
+});
+
+function viteCompression(options = {}) {
+  return {
+    name: 'vite-plugin-compression',
+    async generateBundle(outputOptions, bundle) {
+      for (const fileName in bundle) {
+        if (bundle[fileName].type === 'asset' || bundle[fileName].type === 'chunk') {
+          const compressed = await brotli(bundle[fileName].source);
+          this.emitFile({
+            type: 'asset',
+            fileName: `${fileName}.br`,
+            source: compressed,
+          });
+        }
+      }
     },
-    server: {
-      port: 3000,
-      open: true,
-    },
-  });
+  };
+}

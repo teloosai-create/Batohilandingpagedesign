@@ -43,7 +43,7 @@ const features = [
 
 export function KeyFeatures() {
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-900 via-orange-950 to-amber-950">
+    <section id="features" className="py-20 bg-gradient-to-br from-gray-900 via-orange-950 to-amber-950">
       <div className="max-w-7xl mx-auto px-8">
         {/* Header */}
         <motion.div

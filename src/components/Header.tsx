@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Menu, X, MapPin, Phone, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -29,8 +29,9 @@ export function Header() {
 
   const navItems = [
     { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
     { label: "Features", href: "#features" },
-    { label: "Destinations", href: "#destinations" },
+    { label: "Why Batohi", href: "#why-batohi" },
     { label: "Vision", href: "#vision" },
     { label: "Contact", href: "#contact" }
   ];
@@ -46,11 +47,10 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-gray-900/98 backdrop-blur-lg shadow-2xl border-b border-orange-500/20"
-            : "bg-gradient-to-b from-gray-900/80 to-transparent backdrop-blur-sm"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? "bg-gray-900/98 backdrop-blur-lg shadow-2xl border-b border-orange-500/20"
+          : "bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-[2px]"
+          }`}
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
@@ -91,17 +91,10 @@ export function Header() {
             </div>
 
             <div className="hidden lg:flex items-center gap-3">
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-orange-400/50 text-orange-200 hover:bg-orange-500/20 hover:border-orange-400 rounded-lg transition-all"
-              >
+              <Button size="sm" variant="outline" className="rounded-lg">
                 Sign In
               </Button>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 rounded-lg shadow-lg hover:shadow-orange-500/50 transition-all"
-              >
+              <Button size="sm" className="rounded-lg">
                 Get Started
               </Button>
             </div>
@@ -242,14 +235,14 @@ export function Header() {
                   <Button
                     size="default"
                     variant="outline"
-                    className="w-full border-orange-400/50 text-orange-200 hover:bg-orange-500/20 hover:border-orange-400 rounded-xl transition-all"
+                    className="w-full rounded-xl"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Sign In
                   </Button>
                   <Button
                     size="default"
-                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 rounded-xl shadow-lg hover:shadow-orange-500/50 transition-all"
+                    className="w-full rounded-xl"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Get Started

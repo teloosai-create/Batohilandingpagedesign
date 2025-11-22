@@ -60,6 +60,12 @@ export function Hero() {
       opacity: 0
     })
   };
+  const handleNavClick = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -92,22 +98,6 @@ export function Hero() {
         <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-orange-400 blur-3xl" />
         <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-yellow-400 blur-3xl" />
       </div>
-
-      {/* Carousel Navigation */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all flex items-center justify-center text-white"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all flex items-center justify-center text-white"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
 
       {/* Dots Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
@@ -151,10 +141,10 @@ export function Hero() {
               </p>
 
               <div className="flex flex-wrap gap-3">
-                <Button size="default" className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="rounded-xl shadow-lg hover:shadow-xl">
                   Get Started
                 </Button>
-                <Button size="default" variant="outline" className="px-6 rounded-xl border-2 border-orange-300 hover:bg-orange-500/20 transition-all text-[rgb(6,6,6)]">
+                <Button size="lg" variant="outline" className="rounded-xl" onClick={() => handleNavClick('#vision')}>
                   Explore Destinations
                 </Button>
               </div>
@@ -189,7 +179,7 @@ export function Hero() {
                 <div className="relative bg-gray-900 rounded-2xl p-3 h-80">
                   <div className="w-full h-full bg-gradient-to-br from-orange-200 to-amber-100 rounded-xl overflow-hidden relative">
                     <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1755286218783-5b8334109336?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHBob25lJTIwdHJhdmVsJTIwYXBwJTIwc2NyZWVufGVufDF8fHx8MTc2Mzc1MzUyNnww&ixlib=rb-4.1.0&q=80&w=1080"
+                      src="https://images.unsplash.com/photo-1755286218783-5b8334109336?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHBob25lJTIwdHJhdmVsJTIwYXBwJTIwc2NyZWVuZmlufGVufDF8fHx8MTc2Mzc1MzUyNnww&ixlib=rb-4.1.0&q=80&w=1080"
                       alt="Batohi App"
                       className="w-full h-full object-cover"
                     />

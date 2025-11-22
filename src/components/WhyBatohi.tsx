@@ -1,84 +1,74 @@
-import { useState } from "react";
-import { motion } from "motion/react";
+import React from 'react';
+import { motion } from "framer-motion";
 import { Heart, Compass, ShieldCheck, Award, TrendingUp, Sparkles } from "lucide-react";
 
-const travelerBenefits = [
+const benefits = [
   {
     icon: Heart,
     title: "Immersive Cultural Experience",
-    description: "Connect deeply with Bihar's heritage through authentic stories, traditions, and local insights that bring history to life."
+    description: "Connect deeply with Bihar's heritage through authentic stories, traditions, and local insights."
   },
   {
     icon: Compass,
     title: "Smooth & Guided Exploration",
-    description: "Navigate confidently with comprehensive guides, clear directions, and helpful tips for every step of your journey."
+    description: "Navigate confidently with comprehensive guides, clear directions, and helpful tips for your journey."
   },
   {
     icon: ShieldCheck,
     title: "Safe & Accessible Travel",
-    description: "Travel with peace of mind using safety features, emergency contacts, and multilingual support designed for your comfort."
-  }
-];
-
-const governmentBenefits = [
+    description: "Travel with peace of mind using safety features, emergency contacts, and multilingual support."
+  },
   {
     icon: Award,
-    title: "Strong State Branding",
-    description: "Showcase Bihar's cultural wealth and tourism potential through a modern, professional digital platform."
+    title: "Curated & Authentic Experiences",
+    description: "Discover the best of Bihar's cultural wealth through a professionally curated digital platform."
   },
   {
     icon: TrendingUp,
-    title: "Better Tourism Insights",
-    description: "Track visitor patterns, popular destinations, and tourism trends to make informed policy decisions."
+    title: "Data-Driven Improvements",
+    description: "Benefit from a constantly improving experience based on visitor patterns and popular destinations."
   },
   {
     icon: Sparkles,
-    title: "Modern Digital Tourism Model",
+    title: "Modern Digital Companion",
     description: "Lead the way in digital tourism innovation with a platform that sets new standards for visitor experience."
   }
 ];
 
-function FlipCard({ benefit, index }: { benefit: any; index: number }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
+function BenefitCard({ benefit, index }: { benefit: any; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="h-64 perspective-1000"
-      onHoverStart={() => setIsFlipped(true)}
-      onHoverEnd={() => setIsFlipped(false)}
-      onClick={() => setIsFlipped(!isFlipped)}
+      initial="rest"
+      whileHover="hover"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.6 }}
+      variants={{
+        rest: { opacity: 0, y: 30 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { delay: index * 0.1, type: "spring", stiffness: 100 }
+        }
+      }}
+      className="h-full rounded-2xl p-6 border transition-all duration-300 cursor-pointer bg-gradient-to-br from-gray-900 to-orange-950 border-orange-800/50 hover:border-orange-600 hover:shadow-orange-500/20 shadow-lg"
     >
-      <motion.div
-        className="relative w-full h-full"
-        style={{ transformStyle: "preserve-3d" }}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6 }}
+      <div className="flex items-center gap-4 mb-4">
+        <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-500">
+          <benefit.icon className="w-7 h-7 text-white" />
+        </div>
+      </div>
+      <h3 className="text-lg text-white mb-2">{benefit.title}</h3>
+      <motion.div 
+        variants={{ 
+          rest: { opacity: 0, height: 0, y: 10 }, 
+          hover: { opacity: 1, height: 'auto', y: 0 }
+        }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden"
       >
-        {/* Front */}
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-white to-orange-50 rounded-2xl shadow-lg border border-orange-100 flex flex-col items-center justify-center p-6"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-amber-400 flex items-center justify-center mb-4">
-            <benefit.icon className="w-8 h-8 text-white" />
-          </div>
-          <h3 className="text-base text-gray-900 text-center">{benefit.title}</h3>
-        </div>
-
-        {/* Back */}
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl shadow-xl flex items-center justify-center p-6"
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)"
-          }}
-        >
-          <p className="text-white text-center text-sm">{benefit.description}</p>
-        </div>
+        <p className="text-sm text-gray-400 leading-relaxed pt-4 mt-4 border-t border-white/10">
+          {benefit.description}
+        </p>
       </motion.div>
     </motion.div>
   );
@@ -86,43 +76,28 @@ function FlipCard({ benefit, index }: { benefit: any; index: number }) {
 
 export function WhyBatohi() {
   return (
-    <section className="py-20 bg-gradient-to-br from-orange-900 via-amber-900 to-red-900 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-orange-400 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-yellow-400 blur-3xl" />
+    <section id="why-batohi" className="py-20 bg-black relative overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-30">
+        <div className="absolute -top-1/2 left-0 w-full h-full bg-gradient-radial from-orange-600 via-transparent to-transparent blur-3xl animate-pulse-slow" />
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-8 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl text-white mb-3">Why Batohi?</h2>
-          <p className="text-base text-orange-100">Hover or tap to discover the benefits</p>
+          <h2 className="text-4xl font-bold text-white mb-4">Why Choose Batohi?</h2>
+          <p className="text-lg text-orange-200 max-w-3xl mx-auto">
+            A comprehensive solution for a modern and seamless travel experience in Bihar.
+          </p>
         </motion.div>
 
-        {/* For Travellers */}
-        <div className="mb-16">
-          <h3 className="text-2xl text-white mb-6 text-center">For Travellers</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {travelerBenefits.map((benefit, index) => (
-              <FlipCard key={index} benefit={benefit} index={index} />
-            ))}
-          </div>
-        </div>
-
-        {/* For Government */}
-        <div>
-          <h3 className="text-2xl text-white mb-6 text-center">For Government</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {governmentBenefits.map((benefit, index) => (
-              <FlipCard key={index} benefit={benefit} index={index} />
-            ))}
-          </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {benefits.map((benefit, index) => (
+            <BenefitCard key={index} benefit={benefit} index={index} />
+          ))}
         </div>
       </div>
     </section>
